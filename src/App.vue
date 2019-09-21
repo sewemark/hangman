@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HangMan />
+    <MatchedWords />
+    <MissedWords />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HangMan from './components/HangMan.vue';
+import MissedWords from './components/MissedWords';
+import MatchedWords from './components/MatchedWord';
+import { FETCH_NEW_WORD } from './store/actions.type';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    HangMan,
+    MatchedWords,
+    MissedWords
+  },
+  created() {
+    this.$store.dispatch(FETCH_NEW_WORD)
+  },
 }
 </script>
 
-<style>
+<style lang="scss">
+
+@import "scss/variables";
+@import "scss/base";
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width:80%;
+  margin:0 auto;
+  margin-top:10rem;
+  background-color:$color-game-background-color;
+  display:flex;
+  flex-wrap: wrap;
 }
+
 </style>
