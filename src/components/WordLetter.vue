@@ -2,7 +2,7 @@
   <div class="word-letter">
       <input 
         class="word-letter__input"
-        v-model="inputVal"  maxlength="1"  @input="onInputChange"/> {{this.letter.discovered}} {{inputVal}}
+        v-model="inputVal"  maxlength="1"  @input="onInputChange"/>
   </div>
 </template>
 
@@ -13,7 +13,6 @@ export default {
   name: 'WordLetter',
    data(){
     return {
-     //inputVal:  this.letter.discovered ? this.letter.letter : '',
      discovered: this.letter.discovered,
     }
   },
@@ -25,11 +24,8 @@ export default {
        
      get: function () {
       const v = this.letter.discovered ? this.letter.letter : '';
-      console.log('getttttttttttttttttttt');
-      console.log(v);
       return v;
     },
-    // setter
       set: function (newValue) {
         this.letter.discovered ? this.letter.letter : '';
         
@@ -38,17 +34,11 @@ export default {
   },
   methods: {
     onInputChange(event) {
-      console.log(event.data);
       this.$store.dispatch('setLetter',  { index: this.letter.index, newValue: event.data} );
-      
-      //this.letter = Object.assign({},this.letter);
     }
   },
    watch: {
     'this.letter.discovered': function (newValue, oldValue) {
-      console.log('kokaina');
-      console.log(this.letter);
-      console.log(newValue);
       this.inputVal = this.letter.discovered ? this.letter.letter : '';
     }
    }

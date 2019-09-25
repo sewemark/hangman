@@ -4,14 +4,21 @@
           You missed
         </div>
         <div class="matched-word__secondary-header">
-          A E D
+          {{missedLettersForamtted}}
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'MatchedWord',
+  computed: {
+    ...mapGetters(['missedLetters']),
+    missedLettersForamtted: function() {
+      return this.missedLetters.reduce((prev, curr)=> prev + ' ' +  curr, '');
+    }
+  }
 }
 </script>
 
