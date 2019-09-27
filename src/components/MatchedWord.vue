@@ -29,10 +29,7 @@ export default {
 @import "../scss/base";
 
 .matched-word {
-  flex: 0 0 50%;
-  display: flex;
-  flex-direction: column;
-  margin-left:15rem;
+  
   &__primary-header {
     color: $color-text-color-secondary;
     font-size:4rem;

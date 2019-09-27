@@ -86,7 +86,6 @@ export default {
 <style scoped lang="scss">
 .hangman {
   background-color: red;
-  flex: 0 0 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;

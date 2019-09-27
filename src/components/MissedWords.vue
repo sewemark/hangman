@@ -31,9 +31,6 @@ export default {
 @import "../scss/base";
 
 .missed-words {
-  background-color:green;
-  flex: 0 0 100%;
- 
   &__item {
     margin-left:1rem;
     display: inline-block;
