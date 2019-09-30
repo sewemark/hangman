@@ -1,0 +1,8 @@
+.matched-letters {
+  flex: 1 0 0;
+  height: 20%;
+  &__item {
+    margin-left: 1rem;
+    display: inline-block;
+  }
+}

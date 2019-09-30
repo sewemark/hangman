@@ -1,7 +1,5 @@
 <template>
   <div class="hangman">
-    <popup-dialog  v-if="gameState === 2" />
-    <win-popup-dialog  v-if="gameState === 0" />
     <figure v-if="effortCount>1" class="bar">
       <img src="../assets/imgs/bar.png" />
     </figure>
@@ -68,116 +66,10 @@
 <script>
 import { mapGetters } from "vuex";
 
-import PopupDialog from './PopupDialog';
-import WinPopupDialog from './WinPopupDialog';
-
 export default {
-  name: "HangMan",
+  name: "Hangman",
   computed: {
     ...mapGetters(["effortCount", "gameState"])
-  },
-  components:{
-    PopupDialog,
-    WinPopupDialog,
   }
 };
 </script>
-
-<style scoped lang="scss">
-.hangman {
-  background-color: red;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  overflow: hidden;
-
-  .bar {
-    margin-left:0;
-    padding-left:0;
-    transform: scale(0.5, 0.5) translateX(-347px) translateY(30px);
-  }
-
-  .hangman-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 450px;
-    transform: scale(0.5, 0.5) translateY(-250px) translateX(-170px);
-
-    .head {
-      z-index: 2;
-    }
-
-    .neck {
-      transform: translateY(-30px);
-      z-index: 1;
-    }
-    .corpus {
-      transform: translateY(-50px);
-      z-index: 1;
-    }
-    .right-arm {
-      position: absolute;
-      top: 241px;
-      left: 110px;
-      z-index: 2;
-    }
-
-    .right-hand {
-      position: absolute;
-      top: 341px;
-      left: 210px;
-      z-index: 1;
-    }
-    .left-hand {
-      position: absolute;
-      top: 341px;
-      left: -48px;
-      z-index: 1;
-    }
-    .left-arm {
-      position: absolute;
-      top: 241px;
-      left: -40px;
-      z-index: 2;
-    }
-    .left-leg {
-      position: absolute;
-      top: 385px;
-      left: 10px;
-      z-index: 2;
-    }
-
-    .right-leg {
-      position: absolute;
-      top: 385px;
-      left: 99px;
-      z-index: 2;
-    }
-
-    .left-foot {
-      position: absolute;
-      top: 540px;
-      left: -24px;
-      z-index: 2;
-    }
-
-    .right-foot {
-      position: absolute;
-      top: 540px;
-      left: 131px;
-      z-index: 2;
-    }
-  }
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-  }
-}
-</style>

@@ -1,0 +1,17 @@
+.missed-letters {
+  flex: 60%;
+  height: 80%;
+  background-color: transparent;
+
+  &__primary-header {
+    color: $color-text-color-secondary;
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+  &__secondary-header {
+    color: $color-text-color-primary;
+    font-size: 6rem;
+    font-weight: bold;
+  }
+}

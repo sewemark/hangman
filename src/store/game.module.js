@@ -1,6 +1,7 @@
 import { WordsService } from "@/common/api.service";
-import { FETCH_NEW_WORD, NEW_GAME } from "./actions.type";
-import { SET_NEW_WORD } from './mutations.type';
+import { FETCH_NEW_WORD, SET_LETTER, SET_NEW_GAME } from "./actions.type";
+import { SET_NEW_WORD, SET_LETTER_DISCOVERED, NEW_GAME, INCRESE_EFFORT_COUNT, SET_MISSED_LETTER, SET_LETTER_UNDISCOVERED} from './mutations.type';
+const GET_NEW_WORD_INTERVAL = 1000;
 
 const initialState = {
   gameState: 1,
@@ -14,29 +15,31 @@ const initialState = {
 export const state = { ...initialState };
 
 const actions = {
-  [FETCH_NEW_WORD]({ commit }) {
+  [FETCH_NEW_WORD]({ commit, dispatch }) {
     return WordsService.get()
       .then((newWord) => {
-        console.log('New word new word');
-        console.log(newWord);
         commit(SET_NEW_WORD, newWord);
       })
       .catch(error => {
-        throw new Error(error);
+        this.$log.error(`Cannot fetch new word`, error);
+        setTimeout(() => {
+          dispatch(FETCH_NEW_WORD)
+        }, GET_NEW_WORD_INTERVAL)
       });
   },
-  setLetter({ commit }, payload) {
-    if (state.word[payload.index].toLowerCase() === payload.newValue.toLowerCase()) {
-      commit('setLetterDiscovered', payload.index);
 
+  [SET_LETTER]({ commit }, payload) {
+    if (state.word[payload.index].toLowerCase() === payload.newValue.toLowerCase()) {
+      commit(SET_LETTER_DISCOVERED, payload.index);
     } else {
-      commit('setLetterUndiscovered', payload.index);
-      commit('increseEffortCount');
-      commit('setMissedLetter', payload.newValue);
+      commit(SET_LETTER_UNDISCOVERED, payload.index);
+      commit(INCRESE_EFFORT_COUNT);
+      commit(SET_MISSED_LETTER, payload.newValue);
     }
   },
-  setNewGame({ commit, dispatch }) {
-    commit('newGame');
+
+  [SET_NEW_GAME]({ commit, dispatch }) {
+    commit(NEW_GAME);
     dispatch('fetch-new-word');
   }
 };
@@ -53,7 +56,8 @@ const mutations = {
       })
     });
   },
-  setLetterDiscovered(state, index) {
+
+  [SET_LETTER_DISCOVERED](state, index) {
     state.letters[index].discovered = true;
     const discoveredValue = state.letters[index].letter;
     state.letters.forEach(letter => {
@@ -66,32 +70,31 @@ const mutations = {
     }
   },
 
-setLetterUndiscovered(state, index) {
-  const letter = state.letters[index];
-  const c = Object.assign({}, letter);
-  state.letters.splice(index, 1, c);
-},
+  [SET_LETTER_UNDISCOVERED](state, index) {
+    const letter = state.letters[index];
+    const c = Object.assign({}, letter);
+    state.letters.splice(index, 1, c);
+  },
 
-setMissedLetter(state, missedLetter){
-  state.missedLetters.push(missedLetter);
-},
+  [SET_MISSED_LETTER](state, missedLetter) {
+    state.missedLetters.push(missedLetter);
+  },
 
-increseEffortCount(state) {
-  state.effortCount++;
-  if (state.effortCount >= state.letters.length) {
-    state.gameState = 2;
-  }
-},
-newGame(state) {
-  //state =  Object.assign({}, state);
-  state.gameState = 1;
-  state.word = '';
-  state.guessCount = 0;
-  state.letters = [];
-  state.missedLetters = [];
-  state.effortCount = 0;
-},
-  
+  [INCRESE_EFFORT_COUNT](state) {
+    state.effortCount++;
+    if (state.effortCount >= state.letters.length) {
+      state.gameState = 2;
+    }
+  },
+
+  [NEW_GAME](state) {
+    state.gameState = 1;
+    state.word = '';
+    state.guessCount = 0;
+    state.letters = [];
+    state.missedLetters = [];
+    state.effortCount = 0;
+  },
 };
 
 const getters = {

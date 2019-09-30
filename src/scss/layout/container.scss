@@ -1,0 +1,32 @@
+.container {
+    position: relative;
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    transform: translateX(10%) translateY(10%);
+    font-family: $primary-font;
+    background-color: $color-game-background-color;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    border-radius: $border-radius;
+  }
+  
+  .container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -1px;
+    border-style: solid;
+  }
+  
+  .container::after {
+    border-radius: 0em;
+    border-width: 25em;
+    border-color:transparent;
+    border-right-color: $color-text-color-primary;
+    border-bottom-color: $color-text-color-primary;
+    border-bottom-right-radius: $border-radius;
+    z-index: -1;
+  }

@@ -1,24 +1,35 @@
-<template>
-    <div id="app" class="container">
-      <HangMan class="hangman" />
-      <MatchedWords class="matched-words" />
-      <MissedWords class="missed-words" />
-      
+  <template>
+  <div id="app">
+    <popup-dialog v-if="gameState === 2" />
+    <win-popup-dialog v-if="gameState === 0" />
+    <div class="container">
+      <hangman class="hangman" />
+      <missed-letters class="matched-words" />
+      <matched-letters class="missed-words" />
     </div>
+  </div>
 </template>
+  <script>
+import Hangnan from "./components/Hangman.vue";
+import MissedLetters from "./components/MissedLetters";
+import MatchedLetters from "./components/MatchedLetters";
+import PopupDialog from "./components/PopupDialog";
+import WinPopupDialog from "./components/WinPopupDialog";
 
-<script>
-import HangMan from "./components/HangMan.vue";
-import MissedWords from "./components/MissedWords";
-import MatchedWords from "./components/MatchedWord";
 import { FETCH_NEW_WORD } from "./store/actions.type";
+import { mapGetters } from "vuex";
 
 export default {
   name: "app",
   components: {
-    HangMan,
-    MatchedWords,
-    MissedWords
+    Hangnan,
+    MissedLetters,
+    MatchedLetters,
+    PopupDialog,
+    WinPopupDialog
+  },
+  computed: {
+    ...mapGetters(["gameState"])
   },
   created() {
     this.$store.dispatch(FETCH_NEW_WORD);
@@ -27,68 +38,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import "scss/variables";
-@import "scss/base";
-
-// #app {
-
-//   width: 80%;
-//   margin: 0 auto;
-//   margin-top: 10rem;
-  
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-.container {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: $color-game-background-color;
-  width: 80%;
-  height: 80vh;
-  transform: translateX(10%) translateY(10%);
-  border: 4px solid #ccc;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  
-}
-
-.container::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  border-style: solid;
-}
-
-.container::after {
-  border-radius: 0em;
-  border-width: 25em;
-  border-color:transparent;
-  border-right-color: $color-text-color-primary;
-  border-bottom-color: $color-text-color-primary;
-  z-index: -1;
-}
-
-.hangman {
-  flex: 50%;
-  height: 80%;
-  background-color: tomato;
-}
-
-.missed-words {
-   flex: 1 0 0;
-  height: 20%;
-    flex-grow: 1;
-  background-color: teal;
-}
-
-.matched-words {
-  flex: 50%;
-  height: 80%;
-  background-color:transparent;
-}
+@import "scss/base/variables";
+@import "scss/base/base";
+@import "scss/layout/container.scss";
+@import "scss/components/hangman.scss";
+@import "scss/components/missed-letters.scss";
+@import "scss/components/matched-letters.scss";
+@import "scss/components/popup-dialog.scss";
+@import "scss/components/word-letter.scss";
 </style>
