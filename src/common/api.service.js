@@ -11,7 +11,6 @@ const ApiService = {
 
   async get(resource) {
     return Vue.axios.get(resource).catch((error) => {
-      this.$log.error(`Cannnot get resource from ${error}`);
       throw new GetWordError(`Cannot get word from ${resource}`);
     });
   },

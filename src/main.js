@@ -15,10 +15,10 @@ const options = {
     separator: '|',
     showConsoleColors: true
 };
- 
-Vue.use(VueLogger, options);
+Vue.use(VueLogger, options); 
 Vue.config.productionTip = false
 Vue.use(Vuex)
+
 ApiService.init();
 
 new Vue({

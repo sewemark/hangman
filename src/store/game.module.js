@@ -1,29 +1,48 @@
 import { WordsService } from "@/common/api.service";
 import { FETCH_NEW_WORD, SET_LETTER, SET_NEW_GAME } from "./actions.type";
-import { SET_NEW_WORD, SET_LETTER_DISCOVERED, NEW_GAME, INCRESE_EFFORT_COUNT, SET_MISSED_LETTER, SET_LETTER_UNDISCOVERED} from './mutations.type';
+import {
+  SET_NEW_WORD,
+  SET_LETTER_DISCOVERED,
+  NEW_GAME,
+  INCRESE_EFFORT_COUNT,
+  SET_MISSED_LETTER,
+  SET_LETTER_UNDISCOVERED,
+  SET_ERROR_SNACKBAR,
+} from './mutations.type';
+
 const GET_NEW_WORD_INTERVAL = 1000;
+const GAME_STATES = Object.freeze({
+  NewGame:1,
+  GameOver:2,
+  Win:3,
+});
 
 const initialState = {
-  gameState: 1,
+  gameState: GAME_STATES.NewGame,
   word: '',
   guessCount: 0,
   letters: [],
   missedLetters: [],
   effortCount: 0,
+  snackbar: {
+    show: false,
+    message: '',
+  }
 };
 
 export const state = { ...initialState };
 
 const actions = {
-  [FETCH_NEW_WORD]({ commit, dispatch }) {
+  [FETCH_NEW_WORD](context, vm) {
     return WordsService.get()
       .then((newWord) => {
-        commit(SET_NEW_WORD, newWord);
+        context.commit(SET_NEW_WORD, newWord);
       })
       .catch(error => {
-        this.$log.error(`Cannot fetch new word`, error);
+        vm.$log.error(`Cannot fetch new word`, error);
+        context.commit(SET_ERROR_SNACKBAR, `Cannot get next word, retry in ${GET_NEW_WORD_INTERVAL / 1000.0}s...`);
         setTimeout(() => {
-          dispatch(FETCH_NEW_WORD)
+          context.dispatch(FETCH_NEW_WORD, vm)
         }, GET_NEW_WORD_INTERVAL)
       });
   },
@@ -95,6 +114,13 @@ const mutations = {
     state.missedLetters = [];
     state.effortCount = 0;
   },
+
+  [SET_ERROR_SNACKBAR](state, message) {
+    state.snackbar = {
+      show: true,
+      message,
+    }
+  }
 };
 
 const getters = {
@@ -120,6 +146,10 @@ const getters = {
 
   effortCount(state) {
     return state.effortCount;
+  },
+
+  snackbar(state) {
+    return state.snackbar;
   }
 };
 

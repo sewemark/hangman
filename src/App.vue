@@ -2,19 +2,21 @@
   <div id="app">
     <popup-dialog v-if="gameState === 2" />
     <win-popup-dialog v-if="gameState === 0" />
+    <snackbar />
     <div class="container">
-      <hangman class="hangman" />
+      <Hangman class="hangman" />
       <missed-letters class="matched-words" />
       <matched-letters class="missed-words" />
     </div>
   </div>
 </template>
   <script>
-import Hangnan from "./components/Hangman.vue";
+import Hangman from "./components/Hangman.vue";
 import MissedLetters from "./components/MissedLetters";
 import MatchedLetters from "./components/MatchedLetters";
 import PopupDialog from "./components/PopupDialog";
 import WinPopupDialog from "./components/WinPopupDialog";
+import Snackbar from "./components/Snackbar";
 
 import { FETCH_NEW_WORD } from "./store/actions.type";
 import { mapGetters } from "vuex";
@@ -22,17 +24,18 @@ import { mapGetters } from "vuex";
 export default {
   name: "app",
   components: {
-    Hangnan,
+    Hangman,
     MissedLetters,
     MatchedLetters,
     PopupDialog,
-    WinPopupDialog
+    WinPopupDialog,
+    Snackbar
   },
   computed: {
     ...mapGetters(["gameState"])
   },
   created() {
-    this.$store.dispatch(FETCH_NEW_WORD);
+    this.$store.dispatch(FETCH_NEW_WORD, this);
   }
 };
 </script>
@@ -46,4 +49,5 @@ export default {
 @import "scss/components/matched-letters.scss";
 @import "scss/components/popup-dialog.scss";
 @import "scss/components/word-letter.scss";
+@import "scss/components/snack-bar.scss";
 </style>
