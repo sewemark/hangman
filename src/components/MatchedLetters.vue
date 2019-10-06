@@ -1,7 +1,7 @@
 <template>
   <div class="matched-letters">
-    <div class="matched-letters__item" v-for="l in letters" v-bind:key="l.id">
-      <word-letter :letter="l" />
+    <div class="matched-letters__item" v-for="letterObject in letters" v-bind:key="letterObject.id">
+      <word-letter :letter="letterObject" />
     </div>
   </div>
 </template>

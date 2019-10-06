@@ -1,6 +1,6 @@
 <template>
   <div class="word-letter">
-    <input class="word-letter__input" v-model="inputVal" maxlength="1" @input="onInputChange" />
+    <input class="word-letter__input" :disabled="this.letter.discovered" v-model="inputVal" maxlength="1" @input="onInputChange" />
   </div>
 </template>
 
