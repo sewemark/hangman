@@ -1,12 +1,14 @@
   <template>
   <div id="app">
-    <popup-dialog v-if="gameState === 2" />
-    <win-popup-dialog v-if="gameState === 0" />
+    <popup-dialog v-if="gameState === GAME_STATES.GameOver" />
+    <win-popup-dialog v-if="gameState === GAME_STATES.Win" />
+    <loader v-if="isLoading" />
     <snackbar />
     <div class="container">
-      <Hangman class="hangman" />
+      <hangman class="hangman" />
       <missed-letters class="matched-words" />
       <matched-letters class="missed-words" />
+      <word-definitions />
     </div>
   </div>
 </template>
@@ -16,8 +18,11 @@ import MissedLetters from "./components/MissedLetters";
 import MatchedLetters from "./components/MatchedLetters";
 import PopupDialog from "./components/PopupDialog";
 import WinPopupDialog from "./components/WinPopupDialog";
+import WordDefinitions from "./components/WordDefinitions";
 import Snackbar from "./components/Snackbar";
+import Loader from "./components/Loader";
 
+import { GAME_STATES } from "./store/game.module";
 import { FETCH_NEW_WORD } from "./store/actions.type";
 import { mapGetters } from "vuex";
 
@@ -29,10 +34,17 @@ export default {
     MatchedLetters,
     PopupDialog,
     WinPopupDialog,
-    Snackbar
+    Snackbar,
+    WordDefinitions,
+    Loader,
+  },
+  data: function() {
+    return {
+      GAME_STATES
+    };
   },
   computed: {
-    ...mapGetters(["gameState"])
+    ...mapGetters(["gameState", "isLoading"])
   },
   created() {
     this.$store.dispatch(FETCH_NEW_WORD, this);
@@ -50,4 +62,7 @@ export default {
 @import "scss/components/popup-dialog.scss";
 @import "scss/components/word-letter.scss";
 @import "scss/components/snack-bar.scss";
+@import "scss/components/word-definitions.scss";
+@import "scss/components/loader.scss";
+
 </style>

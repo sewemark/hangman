@@ -36,10 +36,5 @@ export default {
       });
     }
   },
-  watch: {
-    "this.letter.discovered": function(newValue, oldValue) {
-      this.inputVal = this.letter.discovered ? this.letter.letter : "";
-    }
-  }
 };
 </script>

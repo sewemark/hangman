@@ -1,7 +1,8 @@
-import { SET_ERROR_SNACKBAR } from './actions.type';
-import { ERROR_SNACKBAR, HIDE_ERROR_SNACKBARD } from './mutations.type';
+import { SHOW_ERROR_SNACKBAR, TOGGLE_LOADING } from './actions.type';
+import { ERROR_SNACKBAR, HIDE_ERROR_SNACKBAR } from './mutations.type';
 
 const initialState = {
+    loading: false,
     snackbar: {
         show: false,
         message: '',
@@ -11,11 +12,14 @@ const initialState = {
 export const state = { ...initialState };
 
 const actions = {
-    [SET_ERROR_SNACKBAR](context, message) {
+    [SHOW_ERROR_SNACKBAR](context, message) {
         context.commit(ERROR_SNACKBAR, message)
     },
-    [HIDE_ERROR_SNACKBARD](context) {
-        context.commit(HIDE_ERROR_SNACKBARD);
+    [HIDE_ERROR_SNACKBAR](context) {
+        context.commit(HIDE_ERROR_SNACKBAR);
+    },
+    [TOGGLE_LOADING](context) {
+        context.commit(TOGGLE_LOADING);
     }
 }
 
@@ -26,19 +30,25 @@ const mutations = {
             message,
         }
     },
-    [HIDE_ERROR_SNACKBARD](state) {
+    [HIDE_ERROR_SNACKBAR](state) {
         state.snackbar = {
             show: false,
-            message:'',
+            message: '',
         }
-
+    },
+    [TOGGLE_LOADING](state) {
+        const newValue = !state.loading;
+        state.loading = newValue;
     }
 };
 
 const getters = {
     snackbar(state) {
         return state.snackbar;
-    }
+    },
+    isLoading(state) {
+        return state.loading;
+    },
 };
 
 export default {

@@ -5,4 +5,6 @@ export const INCRESE_EFFORT_COUNT =  'increse-effort-count';
 export const SET_MISSED_LETTER = 'set-missed-letter';
 export const NEW_GAME = 'new-game';
 export const ERROR_SNACKBAR = 'error-snackbar';
-export const HIDE_ERROR_SNACKBARD = 'hide-error-snackbar';
+export const HIDE_ERROR_SNACKBAR = 'hide-error-snackbar';
+export const SET_WORD_DEFINITIONS = 'set-word-definitions';
+export const TOGGLE_LOADING  = 'toggle-loading';

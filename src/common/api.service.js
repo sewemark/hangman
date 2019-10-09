@@ -3,7 +3,6 @@ import axios from "axios";
 import Vue from "vue";
 import VueAxios from "vue-axios";
 import { GetWordError } from '../errors/GetWordError';
-import ResponseParser from '../services/responseParser.service';
 
 const ApiService = {
   init() {
@@ -22,8 +21,18 @@ const ApiService = {
 export default ApiService;
 
 export const WordsService = {
+  init() {
+    this.responseParser = Vue.prototype.$responseParser;
+  },
+
   async get() {
     const response = await ApiService.get(ApiRoutes.Nodes.GetOneRandomWord);
-    return ResponseParser.parseNextWordResponse(response);
+    return this.responseParser.parseNextWordResponse(response);
+  },
+
+  async getDefinitions(word) {
+    const response = await ApiService.get(ApiRoutes.Nodes.WordDefinitionBase.toString().replace('XXX',word));
+    return this.responseParser.parseWordDefinitionResponse(response);
   }
+
 };

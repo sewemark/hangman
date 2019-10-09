@@ -1,0 +1,8 @@
+.word-definitions {
+
+    &__list {
+        list-style-type: decimal;
+        font-size:2rem;
+        color:$color-text-color-secondary;
+    }
+}
