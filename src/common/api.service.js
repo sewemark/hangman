@@ -34,5 +34,4 @@ export const WordsService = {
     const response = await ApiService.get(ApiRoutes.Nodes.WordDefinitionBase.toString().replace('XXX',word));
     return this.responseParser.parseWordDefinitionResponse(response);
   }
-
 };

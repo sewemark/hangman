@@ -1,24 +1,33 @@
 .container {
     position: relative;
     width: 80%;
-    height: 80vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     transform: translateX(10%) translateY(10%);
     font-family: $primary-font;
     background-color: $color-game-background-color;
+    background-color:white; 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     border-radius: $border-radius;
+
+    @media only screen and (max-width: $bp-medium) {
+      width:100%;
+      transform: translateX(0%) translateY(0%);
+    }
   }
-  
+ 
   .container::after {
     content: "";
     position: absolute;
     bottom: 0;
     right: -1px;
     border-style: solid;
+
+    @media only screen and (max-width: $bp-medium) {
+      right: 0;
+    }
   }
   
   .container::after {

@@ -6,9 +6,8 @@
     <snackbar />
     <div class="container">
       <hangman class="hangman" />
-      <missed-letters class="matched-words" />
-      <matched-letters class="missed-words" />
-      <word-definitions />
+      <missed-letters />
+      <matched-letters />
     </div>
   </div>
 </template>
@@ -36,7 +35,7 @@ export default {
     WinPopupDialog,
     Snackbar,
     WordDefinitions,
-    Loader,
+    Loader
   },
   data: function() {
     return {
@@ -64,5 +63,4 @@ export default {
 @import "scss/components/snack-bar.scss";
 @import "scss/components/word-definitions.scss";
 @import "scss/components/loader.scss";
-
 </style>

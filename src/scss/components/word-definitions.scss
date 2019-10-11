@@ -1,5 +1,6 @@
 .word-definitions {
-
+    margin-top:$top-margin;
+    
     &__list {
         list-style-type: decimal;
         font-size:2rem;

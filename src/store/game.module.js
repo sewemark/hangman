@@ -66,7 +66,6 @@ const actions = {
   [GET_WORD_DEFINITION](context, word) {
     return WordsService.getDefinitions(word)
       .then((definitions) => {
-        console.log(definitions);
         context.commit(SET_WORD_DEFINITIONS, definitions);
       })
       .catch(error => {
@@ -101,7 +100,7 @@ const mutations = {
       }
     });
     if (state.letters.filter((letter) => !letter.discovered).length <= 0) {
-      state.gameState = GAME_STATES.GameOver;
+      state.gameState = GAME_STATES.Win;
     }
   },
 
@@ -127,7 +126,6 @@ const mutations = {
   },
 
   [SET_WORD_DEFINITIONS](state, definitions) {
-    console.log('Setting word definitions');
     state.definitions = definitions;
   }
 };
