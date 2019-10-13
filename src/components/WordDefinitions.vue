@@ -1,7 +1,10 @@
 <template>
   <div class="word-definitions">
     <ul class="word-definitions__list">
-      <li v-for="(definition, index) in definitions" v-bind:key="index">{{ definition }}</li>
+      <li
+        v-for="(definition, index) in definitions"
+        v-bind:key="index"
+      >{{ definition.charAt(0).toUpperCase() + definition.slice(1) }}</li>
     </ul>
   </div>
 </template>

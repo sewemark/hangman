@@ -1,6 +1,11 @@
 <template>
   <div class="missed-letters">
-    <div class="missed-letters__primary-header" v-if="missedLettersForamtted.length >0 ">You missed</div>
+    <transition name="fade">
+      <div
+        class="missed-letters__primary-header"
+        v-if="missedLettersForamtted.length >0 "
+      >You missed</div>
+    </transition>
     <div class="missed-letters__secondary-header">{{missedLettersForamtted}}</div>
     <word-definitions />
   </div>
@@ -8,12 +13,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import WordDefinitions from './WordDefinitions';
+import WordDefinitions from "./WordDefinitions";
 
 export default {
   name: "MissedLetters",
-  components:{
-    WordDefinitions,
+  components: {
+    WordDefinitions
   },
   computed: {
     ...mapGetters(["missedLetters"]),
@@ -23,3 +28,14 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

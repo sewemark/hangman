@@ -7,7 +7,7 @@
       background-color: $color-background-color-secondary;
       color: $color-text-color-secondary;
       font-weight: bold;
-      padding: 2rem;
+      padding: $left-padding;
       font-size: 8rem;
       &:focus {
         background-color: $color-text-color-secondary;

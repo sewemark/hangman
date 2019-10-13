@@ -1,10 +1,13 @@
 .container {
     position: relative;
-    width: 80%;
+    max-width: 180rem;
+    margin: 8rem auto;
+    box-shadow: $shadow-dark;
+    min-height: 50rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    transform: translateX(10%) translateY(10%);
+    transform: translateY(10%);
     font-family: $primary-font;
     background-color: $color-game-background-color;
     background-color:white; 
@@ -14,7 +17,10 @@
 
     @media only screen and (max-width: $bp-medium) {
       width:100%;
-      transform: translateX(0%) translateY(0%);
+      transform: translateY(0%);
+      margin-top:0;
+      border-radius: 0;
+      //padding:1rem;
     }
   }
  
@@ -27,6 +33,7 @@
 
     @media only screen and (max-width: $bp-medium) {
       right: 0;
+      border-radius: 0;
     }
   }
   
@@ -38,4 +45,8 @@
     border-bottom-color: $color-text-color-primary;
     border-bottom-right-radius: $border-radius;
     z-index: -1;
+
+    @media only screen and (max-width: $bp-medium) {
+      border-radius: 0;
+    }
   }
