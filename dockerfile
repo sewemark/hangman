@@ -1,13 +1,19 @@
-FROM node:12.2.0-alpine
+FROM node:lts-alpine as build-stage
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
+COPY package*.json ./
 
-COPY package.json /app/package.json
+RUN yarn install
 
-RUN npm install
+COPY . .
 
-RUN npm install @vue/cli@3.7.0 -g
+RUN yarn build
 
-CMD ["npm", "run", "serve"]
+FROM nginx
+
+RUN mkdir /hangman
+
+COPY --from=0 /app/dist /hangman
+
+COPY nginx.conf /etc/nginx/nginx.conf
