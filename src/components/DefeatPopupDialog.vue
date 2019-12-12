@@ -9,11 +9,10 @@
 
 <script>
 import { mapActions } from "vuex";
-import { SET_NEW_GAME } from '../store/actions.type';
-
+import { SET_NEW_GAME } from "../store/actions.type";
 
 export default {
-  name: "PopupDialog",
+  name: "DefeatPopupDialog",
   methods: {
     newGame() {
       this.$store.dispatch(SET_NEW_GAME);

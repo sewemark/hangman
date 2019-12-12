@@ -17,8 +17,6 @@ const ResponseParser = {
         }
     },
     parseWordDefinitionResponse(response) {
-        console.log('Response structure:');
-        console.log(response);
         if (response && Array.isArray(response.data)) {
             return response.data.map(item=> item.text.replace(/(&nbsp;|<([^>]+)>)/ig, ''));
         } else {

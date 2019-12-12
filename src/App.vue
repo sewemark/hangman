@@ -1,6 +1,6 @@
   <template>
   <div id="app">
-    <popup-dialog v-if="gameState === GAME_STATES.GameOver" />
+    <defeat-popup-dialog v-if="gameState === GAME_STATES.GameOver" />
     <win-popup-dialog v-if="gameState === GAME_STATES.Win" />
     <loader v-if="isLoading" />
     <snackbar />
@@ -15,7 +15,7 @@
 import Hangman from "./components/Hangman.vue";
 import MissedLetters from "./components/MissedLetters";
 import MatchedLetters from "./components/MatchedLetters";
-import PopupDialog from "./components/PopupDialog";
+import DefeatPopupDialog from "./components/DefeatPopupDialog";
 import WinPopupDialog from "./components/WinPopupDialog";
 import WordDefinitions from "./components/WordDefinitions";
 import Snackbar from "./components/Snackbar";
@@ -31,7 +31,7 @@ export default {
     Hangman,
     MissedLetters,
     MatchedLetters,
-    PopupDialog,
+    DefeatPopupDialog,
     WinPopupDialog,
     Snackbar,
     WordDefinitions,
