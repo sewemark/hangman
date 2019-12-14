@@ -5,6 +5,7 @@ import VueAxios from "vue-axios";
 import { GetWordError } from '../errors/GetWordError';
 
 const ApiService = {
+  
   init() {
     Vue.use(VueAxios, axios);
     this.$log = Vue.$log;
@@ -12,6 +13,7 @@ const ApiService = {
 
   async get(resource) {
     return Vue.axios.get(resource).catch((error) => {
+      console.log(this);
       this.$log.error(`Cannot get word from ${resource}`, error);
       throw new GetWordError(`Cannot get word from ${resource}`);
     });

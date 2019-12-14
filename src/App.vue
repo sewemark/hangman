@@ -1,7 +1,15 @@
   <template>
   <div id="app">
-    <defeat-popup-dialog v-if="gameState === GAME_STATES.GameOver" />
-    <win-popup-dialog v-if="gameState === GAME_STATES.Win" />
+    <popup-dialog v-if="gameState === GAME_STATES.GameOver">
+      <template #title>
+        <div class="popup-dialog__content--title">Game over, word: <span class="popup-dialog__content--title-akcent">{{word}}</span></div>
+      </template>
+    </popup-dialog>
+    <popup-dialog v-if="gameState === GAME_STATES.Win">
+      <template #title>
+        <div class="popup-dialog__content--title">You won, grats!!!</div>
+      </template>
+    </popup-dialog>
     <loader v-if="isLoading" />
     <snackbar />
     <div class="container">
@@ -15,9 +23,7 @@
 import Hangman from "./components/Hangman.vue";
 import MissedLetters from "./components/MissedLetters";
 import MatchedLetters from "./components/MatchedLetters";
-import DefeatPopupDialog from "./components/DefeatPopupDialog";
-import WinPopupDialog from "./components/WinPopupDialog";
-import WordDefinitions from "./components/WordDefinitions";
+import PopupDialog from "./components/PopupDialog";
 import Snackbar from "./components/Snackbar";
 import Loader from "./components/Loader";
 
@@ -31,10 +37,8 @@ export default {
     Hangman,
     MissedLetters,
     MatchedLetters,
-    DefeatPopupDialog,
-    WinPopupDialog,
+    PopupDialog,
     Snackbar,
-    WordDefinitions,
     Loader
   },
   data: function() {
@@ -43,7 +47,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["gameState", "isLoading"])
+    ...mapGetters(["gameState", "isLoading", "word"])
   },
   created() {
     this.$store.dispatch(FETCH_NEW_WORD, this);

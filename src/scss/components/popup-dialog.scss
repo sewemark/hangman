@@ -24,6 +24,10 @@
         font-size: $title-font-size;
         font-weight: bold;
         text-align: center;
+
+        &-akcent {
+          color:$color-text-color-akcent;
+        }
       }
   
       &--button {

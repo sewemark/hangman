@@ -2,9 +2,9 @@ import { WordsService } from "@/common/api.service";
 import { FETCH_NEW_WORD, SHOW_ERROR_SNACKBAR, SET_LETTER, SET_NEW_GAME, GET_WORD_DEFINITION } from "./actions.type";
 import { HIDE_ERROR_SNACKBAR, INCRESE_EFFORT_COUNT, NEW_GAME, SET_LETTER_DISCOVERED, SET_LETTER_UNDISCOVERED, SET_MISSED_LETTER, SET_NEW_WORD, SET_WORD_DEFINITIONS, TOGGLE_LOADING } from './mutations.type';
 
-const GET_NEW_WORD_INTERVAL = 5000;
+const GET_NEW_WORD_INTERVAL = 20000;
 const MAX_EFFOR_COUNT = 11;
-
+const LOADING_TOGGLE_REFRESH = 100;
 export const GAME_STATES = Object.freeze({
   NewGame: 1,
   GameOver: 2,
@@ -28,22 +28,20 @@ const initialState = {
 export const state = { ...initialState };
 
 const actions = {
-  [FETCH_NEW_WORD](context, vm) {
+  [FETCH_NEW_WORD](context) {
     context.commit(TOGGLE_LOADING);
     return WordsService.get()
       .then((newWord) => {
         context.dispatch(GET_WORD_DEFINITION, newWord);
         context.commit(SET_NEW_WORD, newWord);
-        setTimeout(() => {
-          context.commit(TOGGLE_LOADING);
-        }, 100);
+        
       })
       .catch(error => {
-        vm.$log.error(`Cannot fetch new word`, error);
+        console.error(`Cannot fetch new word`, error);
         context.dispatch(`${SHOW_ERROR_SNACKBAR}`, `Cannot get next word, retry in ${GET_NEW_WORD_INTERVAL / 1000.0} s...`);
         setTimeout(() => {
           context.dispatch(HIDE_ERROR_SNACKBAR);
-          context.dispatch(FETCH_NEW_WORD, vm)
+          context.dispatch(FETCH_NEW_WORD)
         }, GET_NEW_WORD_INTERVAL)
       });
   },
@@ -58,21 +56,25 @@ const actions = {
     }
   },
 
-  [SET_NEW_GAME]({ commit, dispatch }) {
+  [SET_NEW_GAME]({ commit, dispatch, vm }) {
     commit(NEW_GAME, dispatch);
-    dispatch(FETCH_NEW_WORD);
+    dispatch(FETCH_NEW_WORD, vm);
   },
 
   [GET_WORD_DEFINITION](context, word) {
     return WordsService.getDefinitions(word)
       .then((definitions) => {
         context.commit(SET_WORD_DEFINITIONS, definitions);
+        setTimeout(() => {
+          context.commit(TOGGLE_LOADING);
+        }, LOADING_TOGGLE_REFRESH);
       })
       .catch(error => {
+        console.error(error);
         context.dispatch(`${SHOW_ERROR_SNACKBAR}`, `Cannot get word definition, retry in ${GET_NEW_WORD_INTERVAL / 1000.0} s...`);
         setTimeout(() => {
           context.dispatch(HIDE_ERROR_SNACKBAR);
-          context.dispatch(GET_WORD_DEFINITION, vm, word)
+          context.dispatch(GET_WORD_DEFINITION, word)
         }, GET_NEW_WORD_INTERVAL)
       });
   }
@@ -92,7 +94,6 @@ const mutations = {
   },
 
   [SET_LETTER_DISCOVERED](state, payload) {
-
     state.letters[payload.index].discovered = true;
     state.letters.forEach(letter => {
       if (letter.letter.toLowerCase() === payload.newValue.toLowerCase()) {
