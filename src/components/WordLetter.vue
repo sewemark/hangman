@@ -1,29 +1,35 @@
 <template>
   <div class="word-letter">
-    <input class="word-letter__input" :disabled="this.letter.discovered" v-model="inputVal" maxlength="1" @input="onInputChange" />
+    <input
+      v-model="inputVal"
+      class="word-letter__input"
+      :disabled="letter.discovered"
+      maxlength="1"
+      @input="onInputChange"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import { SET_LETTER } from '../store/actions.type';
+import { SET_LETTER } from "../store/actions.type";
 export default {
   ...mapActions["setLetter"],
   name: "WordLetter",
+  props: {
+    letter: Object
+  },
   data() {
     return {
       discovered: this.letter.discovered
     };
-  },
-  props: {
-    letter: Object
   },
   computed: {
     inputVal: {
       get: function() {
         return this.letter.discovered ? this.letter.letter : "";
       },
-      set: function(newValue) {
+      set: function() {
         this.letter.discovered ? this.letter.letter : "";
       }
     }
@@ -35,6 +41,6 @@ export default {
         newValue: event.data
       });
     }
-  },
+  }
 };
 </script>

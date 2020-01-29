@@ -51,8 +51,10 @@ const actions = {
       .then(newWord => {
         context.dispatch(GET_WORD_DEFINITION, newWord);
         context.commit(SET_NEW_WORD, newWord);
+        context.commit(TOGGLE_LOADING);
       })
       .catch(error => {
+        context.commit(TOGGLE_LOADING);
         console.error(`Cannot fetch new word`, error);
         context.dispatch(
           `${SHOW_ERROR_SNACKBAR}`,
@@ -61,7 +63,6 @@ const actions = {
         );
         setTimeout(() => {
           context.dispatch(HIDE_ERROR_SNACKBAR);
-          context.dispatch(FETCH_NEW_WORD);
         }, GET_NEW_WORD_INTERVAL);
       });
   },
@@ -84,6 +85,7 @@ const actions = {
   },
 
   [GET_WORD_DEFINITION](context, word) {
+    context.commit(TOGGLE_LOADING);
     return WordsService.getDefinitions(word)
       .then(definitions => {
         context.commit(SET_WORD_DEFINITIONS, definitions);
@@ -93,6 +95,7 @@ const actions = {
       })
       .catch(error => {
         console.error(error);
+        context.commit(TOGGLE_LOADING);
         context.dispatch(
           `${SHOW_ERROR_SNACKBAR}`,
           `Cannot get word definition, retry in ${GET_NEW_WORD_INTERVAL /

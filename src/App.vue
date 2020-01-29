@@ -1,13 +1,17 @@
-  <template>
+<template>
   <div id="app">
     <popup-dialog v-if="gameState === GAME_STATES.GameOver">
       <template #title>
-        <div class="popup-dialog__content--title">Game over, word: <span class="popup-dialog__content--title-akcent">{{word}}</span></div>
+        <div class="popup-dialog__content--title">
+          Game over, word: <span class="popup-dialog__content--title-akcent">{{ word }}</span>
+        </div>
       </template>
     </popup-dialog>
     <popup-dialog v-if="gameState === GAME_STATES.Win">
       <template #title>
-        <div class="popup-dialog__content--title">You won, grats!!!</div>
+        <div class="popup-dialog__content--title">
+          You won, grats!!!
+        </div>
       </template>
     </popup-dialog>
     <loader v-if="isLoading" />
@@ -32,7 +36,7 @@ import { FETCH_NEW_WORD } from "./store/actions.type";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     Hangman,
     MissedLetters,

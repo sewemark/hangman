@@ -2,9 +2,16 @@
   <div class="popup-dialog">
     <div class="popup-dialog__content">
       <slot name="title">
-        <div class="popup-dialog__content--title">You won</div>
+        <div class="popup-dialog__content--title">
+          You won
+        </div>
       </slot>
-      <button class="popup-dialog__content--button" @click="newGame">New Game</button>
+      <button
+        class="popup-dialog__content--button"
+        @click="newGame"
+      >
+        New Game
+      </button>
     </div>
   </div>
 </template>

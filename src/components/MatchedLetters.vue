@@ -1,6 +1,10 @@
 <template>
   <div class="matched-letters">
-    <div class="matched-letters__item" v-for="letterObject in letters" v-bind:key="letterObject.id">
+    <div
+      v-for="letterObject in letters"
+      :key="letterObject.id"
+      class="matched-letters__item"
+    >
       <word-letter :letter="letterObject" />
     </div>
   </div>

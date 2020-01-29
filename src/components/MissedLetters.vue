@@ -2,11 +2,15 @@
   <div class="missed-letters">
     <transition name="fade">
       <div
-        class="missed-letters__primary-header"
         v-if="missedLettersForamtted.length >0 "
-      >You missed</div>
+        class="missed-letters__primary-header"
+      >
+        You missed
+      </div>
     </transition>
-    <div class="missed-letters__secondary-header">{{missedLettersForamtted}}</div>
+    <div class="missed-letters__secondary-header">
+      {{ missedLettersForamtted }}
+    </div>
     <word-definitions />
   </div>
 </template>

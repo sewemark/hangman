@@ -1,18 +1,6 @@
-# hangman-game
+Hangman game implementation
 
-## Project setup
-```
-yarn install
-```
+![Image description](./img/game.png)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### di
+Mockups and graphics used from
+https://github.com/netguru/frontend-recruitment-task
